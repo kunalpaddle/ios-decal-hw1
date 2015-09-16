@@ -15,39 +15,44 @@ class Foo {
     var wordB : String!
     
     init (words: [String?]) {
-        wordA = words[0]?
-        wordB = words[1]?
+        wordA = words[0]
+        wordB = words[1]
     }
     
 //: [EXPLAIN YOUR ANSWER TO Q1 HERE]
-    
-
-    
+    /*
+    Having "String?" already safely unwraps the optional Strings stored in words.
+    Adding the extra question marks to wordA and wordB is redundant.
+    */
 //: ## Q2: Variable Types and Function Types
 //: Why does the compiler dislike the for loop? Also, what should we return?
     
-    func arePalindromes(words: [String]) -> Bool! {
+    static func arePalindromes(words: [String]) -> Bool {
         let reversedWords = words.map() {String($0.characters.reverse())}
         var numElements = words.count
         
-        for let i = 0; i < numElements; i++ {
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
         
-        return nil
+        return true
     }
     
 //: [EXPLAIN YOUR ANSWER TO Q2 HERE]
     
+    /*
+    1.Booleans should not be optional. The method should return true or false, NOT true,false,or nil.
+    2. 'i' must be mutable so that it can be incremented in the loop. However, it is declared with a let statement, which makes it immutable. Change to var.
     
+    */
     
 //: ## Q3: More functions, and object initialization
 //: The method should be returning true or false -- what's wrong?
 //: Are we initializing the dictionary correctly?
-    func isAnagram(wordA: String, wordB: String) -> Bool? {
-        var countLetters : [Character : Int]
+    static func isAnagram(wordA: String, wordB: String) -> Bool {
+        var countLetters = [Character : Int]()
         var lenA = wordA.characters.count
         var lenB = wordB.characters.count
         
@@ -81,12 +86,16 @@ class Foo {
             }
         }
         
-        return nil
+        return true
     }
 }
 
 //: [EXPLAIN YOUR ANSWER TO Q3 HERE]
-
+/*
+1.Booleans should not be optional. The method should return true or false, NOT true,false,or nil.
+2.Empty dictionary should be assigned with an = and ().
+3.The anagram and palindrome functions are not tied to an instance of Foo. Hence, they should be labelled static.
+*/
 
 //: **Do not** change anything below.
 //: You should be able to call the methods as is.
